@@ -95,7 +95,7 @@ The Render Blueprint is located at `Meditrial/render.yaml` (relative to the GitH
 
 The Blueprint configures the frontend to call `https://meditrail-api.onrender.com/api/v1` and allows the default frontend origin `https://meditrail-ui.onrender.com`. If Render assigns different service URLs, update `VITE_API_URL` on the frontend and `CORS_ORIGINS` on the API, then redeploy.
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for additional deployment notes and free-tier limitations. Render’s free API service may sleep when idle. Use Supabase, not local SQLite, for deployed data because Render’s local filesystem is ephemeral.
+See [DEPLOYMENT.md](Meditrial/DEPLOYMENT.md) for additional deployment notes and free-tier limitations. Render’s free API service may sleep when idle. Use Supabase, not local SQLite, for deployed data because Render’s local filesystem is ephemeral.
 
 ## Security and data limits
 
