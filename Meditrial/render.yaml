@@ -15,7 +15,6 @@ services:
   - type: web
     name: meditrail-ui
     runtime: static
-    plan: free
     rootDir: Meditrial/frontend
     buildCommand: npm ci && npm run build
     staticPublishPath: dist
