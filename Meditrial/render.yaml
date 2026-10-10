@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: meditrail-api
+    runtime: python
+    plan: free
+    rootDir: Meditrial/backend
+    buildCommand: pip install .
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: CORS_ORIGINS
+        value: https://meditrail-ui.onrender.com
+  - type: web
+    name: meditrail-ui
+    runtime: static
+    plan: free
+    rootDir: Meditrial/frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://meditrail-api.onrender.com/api/v1
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

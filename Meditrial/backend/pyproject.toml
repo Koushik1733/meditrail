@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "meditrail-backend"
+version = "0.1.0"
+description = "MediTrail Backend API"
+authors = ["MediTrail"]
+packages = [{ include = "app" }]
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.110.0"
+uvicorn = {extras = ["standard"], version = "^0.29.0"}
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.29"}
+asyncpg = "^0.29.0"
+aiosqlite = "^0.20.0"
+alembic = "^1.13.1"
+pydantic = {extras = ["email"], version = "^2.6.4"}
+pydantic-settings = "^2.2.1"
+passlib = {extras = ["argon2"], version = "^1.7.4"}
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+python-multipart = "^0.0.9"
+redis = "^5.0.3"
+celery = "^5.3.6"
+boto3 = "^1.34.79"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

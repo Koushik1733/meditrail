@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediTrail - Your Medical History</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#475569',
+                        danger: '#ef4444',
+                        warning: '#f59e0b',
+                        success: '#10b981'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1px;
+            top: 0;
+            bottom: -2rem;
+            width: 2px;
+            background-color: #e2e8f0;
+            z-index: 0;
+        }
+        .timeline-item:last-child::before {
+            bottom: 0;
+        }
+        .tab-active {
+            border-bottom: 2px solid #2563eb;
+            color: #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    
+        <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-heartbeat text-primary text-2xl mr-2"></i>
+                    <span class="font-bold text-xl tracking-tight text-gray-900">MediTrail</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="upload.html" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">
+                        <i class="fas fa-upload mr-2"></i>Upload Record
+                    </a>
+                    <button onclick="openShareModal()" class="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">
+                        <i class="fas fa-share-alt mr-2"></i>Share Records
+                    </button>
+                    <a href="login.html" class="ml-2 text-sm text-gray-500 hover:text-gray-700 font-medium">Sign Out</a>
+                    <div class="h-8 w-8 ml-2 rounded-full bg-blue-100 flex items-center justify-center text-primary font-bold">
+                        JD
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row gap-6">
+        
+        <!-- Left Sidebar: Health Snapshot -->
+        <div class="w-full md:w-1/3 space-y-6">
+            <!-- Patient Info -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
+                <div class="flex items-center gap-4 mb-4">
+                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=eff6ff&color=2563eb&size=64" alt="John Doe" class="rounded-full">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900">John Doe</h2>
+                        <p class="text-sm text-gray-500">Male, 42 years (DOB: 12 May 1984)</p>
+                        <p class="text-sm text-gray-500">Blood Type: O+</p>
+                    </div>
+                </div>
+                
+                <div class="pt-4 border-t border-gray-100">
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Chronic Conditions</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                            Type 2 Diabetes
+                        </span>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                            Hypertension
+                        </span>
+                    </div>
+                </div>
+
+                <div class="pt-4 mt-4 border-t border-gray-100">
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Allergies</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-50 text-red-700 border border-red-200">
+                            <i class="fas fa-exclamation-circle mr-1"></i> Penicillin
+                        </span>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200">
+                            Peanuts
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Medications -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900">Current Medications</h3>
+                </div>
+                <ul class="space-y-3">
+                    <li class="flex items-start">
+                        <i class="fas fa-pills text-blue-500 mt-1 mr-3"></i>
+                        <div>
+                            <p class="font-medium text-sm text-gray-900">Metformin 500mg</p>
+                            <p class="text-xs text-gray-500">Twice daily with meals</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-pills text-blue-500 mt-1 mr-3"></i>
+                        <div>
+                            <p class="font-medium text-sm text-gray-900">Amlodipine 5mg</p>
+                            <p class="text-xs text-gray-500">Once daily in morning</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content: Timeline & Care Awareness -->
+        <div class="w-full md:w-2/3 space-y-6">
+            
+            <!-- Care Awareness Alerts -->
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md shadow-sm">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-yellow-800">Care Awareness Flags (Clinician Review Recommended)</h3>
+                        <div class="mt-2 text-sm text-yellow-700 space-y-2">
+                            <p><i class="fas fa-circle text-[8px] mr-1"></i> <strong>Repeated Test:</strong> HbA1c was tested 2 weeks ago at City Lab. A new test might be redundant.</p>
+                            <p><i class="fas fa-circle text-[8px] mr-1"></i> <strong>Overlapping Medication:</strong> Patient was prescribed 'Lisinopril' by Dr. Smith (Cardiology) but is already taking 'Amlodipine'. Check for potential interactions or redundancy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="border-b border-gray-200">
+                <nav class="-mb-px flex space-x-8">
+                    <button class="tab-active whitespace-nowrap py-4 px-1 font-medium text-sm">
+                        Unified Timeline
+                    </button>
+                    <button class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                        Documents & Scans
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Timeline -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 relative">
+                
+                <div class="relative pl-6">
+                    <!-- Item 1 -->
+                    <div class="timeline-item relative pb-8">
+                        <div class="absolute left-[-29px] top-1 h-4 w-4 rounded-full border-2 border-white bg-blue-500 z-10"></div>
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
+                            <h4 class="text-lg font-semibold text-gray-900">Cardiology Consultation</h4>
+                            <span class="text-sm font-medium text-blue-600">Oct 05, 2026</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Dr. Sarah Smith • Metro Heart Institute</p>
+                        <div class="bg-gray-50 rounded p-3 border border-gray-100 text-sm">
+                            <p class="text-gray-700"><strong>Notes:</strong> Patient reported mild shortness of breath during exercise. BP slightly elevated at 135/85.</p>
+                            <div class="mt-2 flex gap-2">
+                                <span class="bg-white border border-gray-200 px-2 py-1 rounded text-xs flex items-center"><i class="fas fa-file-prescription text-blue-500 mr-1"></i> Lisinopril 10mg added</span>
+                                <span class="bg-white border border-gray-200 px-2 py-1 rounded text-xs flex items-center"><i class="fas fa-file-medical-alt text-green-500 mr-1"></i> ECG Report</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="timeline-item relative pb-8">
+                        <div class="absolute left-[-29px] top-1 h-4 w-4 rounded-full border-2 border-white bg-green-500 z-10"></div>
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
+                            <h4 class="text-lg font-semibold text-gray-900">Comprehensive Blood Panel</h4>
+                            <span class="text-sm font-medium text-gray-500">Sep 20, 2026</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">City Diagnostic Labs</p>
+                        <div class="bg-gray-50 rounded p-3 border border-gray-100 text-sm">
+                            <p class="text-gray-700"><strong>Results:</strong> HbA1c: 6.8% (Slightly high), Cholesterol: 190 mg/dL.</p>
+                            <div class="mt-2">
+                                <a href="#" class="text-blue-600 hover:underline text-xs flex items-center"><i class="fas fa-download mr-1"></i> Download PDF Report</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Item 3 -->
+                    <div class="timeline-item relative pb-1">
+                        <div class="absolute left-[-29px] top-1 h-4 w-4 rounded-full border-2 border-white bg-purple-500 z-10"></div>
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
+                            <h4 class="text-lg font-semibold text-gray-900">Endocrinology Follow-up</h4>
+                            <span class="text-sm font-medium text-gray-500">Jul 12, 2026</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Dr. Alan Turing • Wellness Clinic</p>
+                        <div class="bg-gray-50 rounded p-3 border border-gray-100 text-sm">
+                            <p class="text-gray-700"><strong>Notes:</strong> Diabetes well managed on current Metformin dose. Recommend continuing diet and exercise.</p>
+                            <div class="mt-2 flex gap-2">
+                                <span class="bg-white border border-gray-200 px-2 py-1 rounded text-xs flex items-center"><i class="fas fa-sync text-gray-500 mr-1"></i> Refill Metformin 500mg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50">
+                <h3 class="text-lg font-semibold text-gray-900">Share Medical Records</h3>
+                <button onclick="closeShareModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Doctor / Clinic ID or Email</label>
+                    <input type="text" placeholder="e.g. dr.smith@hospital.com or ID-4921" class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">What to share?</label>
+                    <div class="space-y-2 mt-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" checked class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4">
+                            <span class="ml-2 text-sm text-gray-700">Health Snapshot (Allergies, Conditions, Meds)</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" checked class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4">
+                            <span class="ml-2 text-sm text-gray-700">Last 6 months Timeline</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4">
+                            <span class="ml-2 text-sm text-gray-700">Full History</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Access Expiry</label>
+                    <select class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        <option>24 Hours</option>
+                        <option>7 Days</option>
+                        <option>30 Days</option>
+                        <option>Until Revoked</option>
+                    </select>
+                </div>
+            </div>
+            <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end gap-3">
+                <button onclick="closeShareModal()" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Cancel</button>
+                <button onclick="generateLink()" class="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition flex items-center">
+                    <i class="fas fa-link mr-2"></i> Generate Secure Link
+                </button>
+            </div>
+            
+            <!-- Active Shares Section -->
+            <div class="border-t border-gray-200 p-6 bg-gray-50">
+                <h4 class="text-sm font-medium text-gray-900 mb-3">Active Shares & Access History</h4>
+                <ul class="space-y-3">
+                    <li class="flex justify-between items-center text-sm border bg-white p-3 rounded shadow-sm border-gray-200">
+                        <div>
+                            <p class="font-medium text-gray-900">Dr. Sarah Smith</p>
+                            <p class="text-xs text-gray-500">Expires in 2 days • Accessed 1 hr ago</p>
+                        </div>
+                        <button class="text-red-600 hover:text-red-800 font-medium text-xs border border-red-200 bg-red-50 px-2 py-1 rounded">Revoke</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openShareModal() {
+            document.getElementById('shareModal').classList.remove('hidden');
+        }
+
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.add('hidden');
+        }
+        
+        function generateLink() {
+            alert("Secure link generated and sent to provider!");
+            closeShareModal();
+        }
+    </script>
+</body>
+</html>

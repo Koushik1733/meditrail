@@ -1,0 +1,35 @@
+# Local secrets and environment-specific configuration
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# JavaScript dependencies and generated builds
+**/node_modules/
+**/dist/
+**/build/
+**/.next/
+**/out/
+**/coverage/
+
+# Python environments, caches, and package outputs
+**/.venv/
+**/venv/
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+*.whl
+
+# Local databases and uploaded/private user data
+*.db
+*.sqlite
+*.sqlite3
+**/uploads/
+**/user_uploads/
+
+# Logs and operating-system/editor files
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediTrail - AI Document Upload</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        success: '#10b981'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-gray-500 hover:text-gray-700 mr-4">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <i class="fas fa-heartbeat text-primary text-2xl mr-2"></i>
+                    <span class="font-bold text-xl tracking-tight text-gray-900">MediTrail</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-primary font-bold">
+                        JD
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <div class="mb-8">
+            <h1 class="text-2xl font-bold text-gray-900">Upload Medical Record</h1>
+            <p class="text-gray-500 mt-1">Our AI will automatically extract key information from your PDF or photo.</p>
+        </div>
+
+        <!-- Upload Area (Initial State) -->
+        <div id="uploadArea" class="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center bg-white hover:bg-gray-50 transition cursor-pointer">
+            <i class="fas fa-cloud-upload-alt text-4xl text-blue-500 mb-4"></i>
+            <h3 class="text-lg font-medium text-gray-900 mb-1">Click to upload or drag and drop</h3>
+            <p class="text-sm text-gray-500">PDF, JPG, or PNG (max. 10MB)</p>
+            <button onclick="simulateUpload()" class="mt-6 bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50">
+                Select File
+            </button>
+        </div>
+
+        <!-- Processing State (Hidden initially) -->
+        <div id="processingArea" class="hidden text-center py-16 bg-white rounded-lg border border-gray-200 shadow-sm">
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
+            <h3 class="text-lg font-medium text-gray-900">AI is extracting your data...</h3>
+            <p class="text-sm text-gray-500 mt-2">Reading document and structuring medical facts.</p>
+        </div>
+
+        <!-- Extraction Review (Hidden initially) -->
+        <div id="reviewArea" class="hidden space-y-6">
+            <div class="bg-green-50 border border-green-200 rounded-md p-4 flex items-start">
+                <i class="fas fa-check-circle text-green-500 mt-0.5 mr-3"></i>
+                <div>
+                    <h3 class="text-sm font-medium text-green-800">Extraction Complete</h3>
+                    <p class="text-sm text-green-700 mt-1">Please review the extracted information before saving it to your timeline.</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+                    <h3 class="font-semibold text-gray-900">Extracted Clinical Facts</h3>
+                    <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded border border-blue-200">From: blood_panel_oct.pdf</span>
+                </div>
+                
+                <div class="p-6 space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Record Type</label>
+                            <input type="text" value="Laboratory Test" class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-primary focus:border-primary">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Date</label>
+                            <input type="date" value="2026-10-09" class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-primary focus:border-primary">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Provider</label>
+                            <input type="text" value="City Diagnostic Labs" class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-primary focus:border-primary">
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-6 border-t border-gray-100">
+                        <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">Extracted Test Results</label>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3 bg-gray-50 p-3 rounded border border-gray-200">
+                                <div class="flex-grow">
+                                    <input type="text" value="HbA1c" class="w-full bg-transparent border-none text-sm font-medium focus:ring-0 p-0">
+                                </div>
+                                <div class="w-24">
+                                    <input type="text" value="6.1%" class="w-full border border-gray-300 rounded px-2 py-1 text-sm text-center">
+                                </div>
+                                <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>
+                            </li>
+                            <li class="flex items-center gap-3 bg-gray-50 p-3 rounded border border-gray-200">
+                                <div class="flex-grow">
+                                    <input type="text" value="Fasting Glucose" class="w-full bg-transparent border-none text-sm font-medium focus:ring-0 p-0">
+                                </div>
+                                <div class="w-24">
+                                    <input type="text" value="110 mg/dL" class="w-full border border-gray-300 rounded px-2 py-1 text-sm text-center">
+                                </div>
+                                <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>
+                            </li>
+                        </ul>
+                        <button class="mt-3 text-sm text-primary hover:text-blue-700 font-medium"><i class="fas fa-plus mr-1"></i> Add Row</button>
+                    </div>
+                </div>
+                
+                <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end gap-3">
+                    <a href="index.html" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50">Cancel</a>
+                    <a href="index.html" class="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 shadow-sm">
+                        <i class="fas fa-check mr-2"></i>Confirm & Save to Timeline
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function simulateUpload() {
+            document.getElementById('uploadArea').classList.add('hidden');
+            document.getElementById('processingArea').classList.remove('hidden');
+            
+            // Simulate AI processing time
+            setTimeout(() => {
+                document.getElementById('processingArea').classList.add('hidden');
+                document.getElementById('reviewArea').classList.remove('hidden');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
